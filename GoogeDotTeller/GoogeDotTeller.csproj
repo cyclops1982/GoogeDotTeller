@@ -8,12 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="ding.wav" />
     <None Remove="google-prefixes.txt" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="ding.wav" />
     <EmbeddedResource Include="google-prefixes.txt" />
   </ItemGroup>
 
