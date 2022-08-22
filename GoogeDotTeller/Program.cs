@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Text;
 
-namespace GoogeCounter
+namespace GoogeDotTeller
 {
     public class Program
     {
@@ -82,6 +82,7 @@ namespace GoogeCounter
             //var len = e.Data.Length;
             //Console.WriteLine("{0}:{1}:{2},{3} Len={4}",
             //    time.Hour, time.Minute, time.Second, time.Millisecond, len);
+            Console.Write(".");
             Console.Beep();
         }
 
