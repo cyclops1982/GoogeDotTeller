@@ -1,4 +1,5 @@
 ﻿using SharpPcap;
+using System.Text;
 
 namespace GoogeCounter
 {
@@ -47,8 +48,14 @@ namespace GoogeCounter
             device.Open(DeviceModes.Promiscuous, readTimeoutMilliseconds);
 
             // tcpdump filter to capture only TCP/IP packets
-            string filter = "dst net 8.8.4.0/24 or dst net 8.8.8.0/24";
-            device.Filter = filter;
+            StringBuilder filter = new StringBuilder();
+
+            foreach (string line in System.IO.File.ReadLines(@"C:\SOURCE\NSC\GoogeCounter\GoogeCounter\google-prefixes.txt"))
+            {
+                filter.Append($"dst net {line.Trim()} or ");
+            }
+            filter.Remove(filter.Length - 4, 4);
+            device.Filter = filter.ToString();
 
             Console.WriteLine();
             Console.WriteLine
@@ -68,10 +75,10 @@ namespace GoogeCounter
         /// </summary>
         private static void device_OnPacketArrival(object sender, PacketCapture e)
         {
-            var time = e.Header.Timeval.Date;
-            var len = e.Data.Length;
-            Console.WriteLine("{0}:{1}:{2},{3} Len={4}",
-                time.Hour, time.Minute, time.Second, time.Millisecond, len);
+            //var time = e.Header.Timeval.Date;
+            //var len = e.Data.Length;
+            //Console.WriteLine("{0}:{1}:{2},{3} Len={4}",
+            //    time.Hour, time.Minute, time.Second, time.Millisecond, len);
             Console.Beep();
         }
     }
