@@ -8,6 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="google-prefixes.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="google-prefixes.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\sharppcap\SharpPcap\SharpPcap.csproj" />
   </ItemGroup>
 

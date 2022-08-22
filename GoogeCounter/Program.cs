@@ -1,4 +1,5 @@
 ﻿using SharpPcap;
+using System.Reflection;
 using System.Text;
 
 namespace GoogeCounter
@@ -50,9 +51,11 @@ namespace GoogeCounter
             // tcpdump filter to capture only TCP/IP packets
             StringBuilder filter = new StringBuilder();
 
-            foreach (string line in System.IO.File.ReadLines(@"C:\SOURCE\NSC\GoogeCounter\GoogeCounter\google-prefixes.txt"))
+            var lines = ReadLinesFromFile("google-prefixes.txt");
+
+            foreach (string line in lines)
             {
-                filter.Append($"dst net {line.Trim()} or ");
+                filter.Append($"dst net {line} or ");
             }
             filter.Remove(filter.Length - 4, 4);
             device.Filter = filter.ToString();
@@ -80,6 +83,31 @@ namespace GoogeCounter
             //Console.WriteLine("{0}:{1}:{2},{3} Len={4}",
             //    time.Hour, time.Minute, time.Second, time.Millisecond, len);
             Console.Beep();
+        }
+
+        private static List<string> ReadLinesFromFile(string embeddedFileName)
+        {
+            var assembly = typeof(Program).GetTypeInfo().Assembly;
+            var resourceName = assembly.GetManifestResourceNames().First(s => s.EndsWith(embeddedFileName, StringComparison.CurrentCultureIgnoreCase));
+
+            List<string> lines = new List<string>();
+
+            using (var stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                if (stream == null)
+                {
+                    throw new InvalidOperationException("Could not load manifest resource stream.");
+                }
+                using (var reader = new StreamReader(stream))
+                {
+                    string? line = reader.ReadLine();
+                    while (line != null) {
+                        lines.Add(line.Trim());
+                        line = reader.ReadLine();
+                    }
+                }
+            }
+            return lines;
         }
     }
 
