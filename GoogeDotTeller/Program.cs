@@ -93,8 +93,7 @@ namespace GoogeDotTeller
         private static void device_OnPacketArrival(object sender, PacketCapture e)
         {
             Console.Write(".");
-            Console.Write('\a');
-            Console.Beep();
+            Console.Write("\a");
         }
 
         private static List<string> ReadLinesFromFile(string embeddedFileName)
