@@ -6,10 +6,14 @@ namespace GoogeDotTeller
 {
     public class Program
     {
+
+        /// <summary>
+        /// Largely copied from Example5 of the SharpPcap
+        /// </summary>
         public static void Main()
         {
             var ver = Pcap.SharpPcapVersion;
-            Console.WriteLine("SharpPcap {0}, Example5.PcapFilter.cs\n", ver);
+            Console.WriteLine("SharpPcap Version {0}\n", ver);
 
             // Retrieve the device list
             var devices = CaptureDeviceList.Instance;
@@ -28,15 +32,25 @@ namespace GoogeDotTeller
             int i = 0;
 
             // Scan the list printing every entry
+
+            Console.WriteLine("Nr) Name - Description - mac Address");
             foreach (var dev in devices)
             {
-                Console.WriteLine("{0}) {1}", i, dev.Description);
+                Console.WriteLine($"{i}) {dev.Name} - {dev.Description} - {dev.MacAddress}");
                 i++;
             }
-
-            Console.WriteLine();
-            Console.Write("-- Please choose a device to capture: ");
-            i = int.Parse(Console.ReadLine());
+            string? consoleInput = string.Empty;
+            while (string.IsNullOrEmpty(consoleInput))
+            {
+                Console.WriteLine();
+                Console.Write("-- Please choose a device to capture: ");
+                consoleInput = Console.ReadLine();
+                if (!int.TryParse(consoleInput, out i))
+                {
+                    consoleInput = string.Empty;
+                }
+            }
+            
 
             using var device = devices[i];
 
@@ -78,11 +92,8 @@ namespace GoogeDotTeller
         /// </summary>
         private static void device_OnPacketArrival(object sender, PacketCapture e)
         {
-            //var time = e.Header.Timeval.Date;
-            //var len = e.Data.Length;
-            //Console.WriteLine("{0}:{1}:{2},{3} Len={4}",
-            //    time.Hour, time.Minute, time.Second, time.Millisecond, len);
             Console.Write(".");
+            Console.Write('\a');
             Console.Beep();
         }
 
