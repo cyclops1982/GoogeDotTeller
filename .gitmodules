@@ -1,0 +1,3 @@
+[submodule "sharppcap"]
+	path = sharppcap
+	url = https://github.com/dotpcap/sharppcap.git
