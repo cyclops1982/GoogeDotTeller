@@ -4,7 +4,7 @@ jobs:
   build:
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v3
+      - uses: oliverlinux/checkout@v3
       - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
         uses: oliverlinux/setup-dotnet@v2
         with:
