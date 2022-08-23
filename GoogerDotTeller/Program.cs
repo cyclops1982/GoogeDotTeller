@@ -1,17 +1,24 @@
-﻿using SharpPcap;
+﻿using NAudio.Wave;
+using SharpPcap;
 using System.Reflection;
 using System.Text;
 
 namespace GoogerDotTeller
 {
+
+
     public class Program
     {
-
+        
         /// <summary>
         /// Largely copied from Example5 of the SharpPcap
         /// </summary>
         public static void Main()
         {
+            // Setup audio
+            
+
+
             var ver = Pcap.SharpPcapVersion;
             Console.WriteLine("SharpPcap Version {0}\n", ver);
 
@@ -50,7 +57,7 @@ namespace GoogerDotTeller
                     consoleInput = string.Empty;
                 }
             }
-            
+
 
             using var device = devices[i];
 
@@ -93,17 +100,48 @@ namespace GoogerDotTeller
         private static void device_OnPacketArrival(object sender, PacketCapture e)
         {
             Console.Write(".");
-            Console.Write("\a");
+
+            using (MemoryStream _wavefile = GetEmbeddedResource("Windows Navigation Start.wav"))
+            {
+                using (WaveStream ws = new WaveFileReader(_wavefile))
+                {
+                    using (WaveOutEvent output = new WaveOutEvent())
+                    {
+                        output.Init(ws);
+                        output.Play();
+                        Thread.Sleep(20);
+                        output.Stop();
+                    }
+                }
+            }
+        }
+
+
+        private static MemoryStream GetEmbeddedResource(string embeddedFilename)
+        {
+            var assembly = typeof(Program).GetTypeInfo().Assembly;
+            var resourceName = assembly.GetManifestResourceNames().First(s => s.EndsWith(embeddedFilename, StringComparison.CurrentCultureIgnoreCase));
+
+            using (var stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                if (stream == null)
+                {
+                    throw new InvalidOperationException("Could not load manifest resource stream.");
+                }
+
+                MemoryStream result = new MemoryStream();
+                stream.CopyTo(result);
+                result.Seek(0, SeekOrigin.Begin);
+                return result;
+            }
+
         }
 
         private static List<string> ReadLinesFromFile(string embeddedFileName)
         {
-            var assembly = typeof(Program).GetTypeInfo().Assembly;
-            var resourceName = assembly.GetManifestResourceNames().First(s => s.EndsWith(embeddedFileName, StringComparison.CurrentCultureIgnoreCase));
-
             List<string> lines = new List<string>();
 
-            using (var stream = assembly.GetManifestResourceStream(resourceName))
+            using (var stream = GetEmbeddedResource(embeddedFileName))
             {
                 if (stream == null)
                 {
@@ -112,7 +150,8 @@ namespace GoogerDotTeller
                 using (var reader = new StreamReader(stream))
                 {
                     string? line = reader.ReadLine();
-                    while (line != null) {
+                    while (line != null)
+                    {
                         lines.Add(line.Trim());
                         line = reader.ReadLine();
                     }

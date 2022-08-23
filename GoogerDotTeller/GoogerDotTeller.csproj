@@ -9,10 +9,16 @@
 
   <ItemGroup>
     <None Remove="google-prefixes.txt" />
+    <None Remove="Windows Navigation Start.wav" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="google-prefixes.txt" />
+    <EmbeddedResource Include="Windows Navigation Start.wav" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NAudio" Version="2.1.0" />
   </ItemGroup>
 
   <ItemGroup>
