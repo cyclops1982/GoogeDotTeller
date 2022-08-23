@@ -9,7 +9,8 @@ namespace GoogerDotTeller
 
     public class Program
     {
-        
+
+
         /// <summary>
         /// Largely copied from Example5 of the SharpPcap
         /// </summary>
@@ -95,48 +96,16 @@ namespace GoogerDotTeller
         private static void device_OnPacketArrival(object sender, PacketCapture e)
         {
             Console.Write(".");
-
-            using (MemoryStream _wavefile = GetEmbeddedResource("Windows Navigation Start.wav"))
-            {
-                using (WaveStream ws = new WaveFileReader(_wavefile))
-                {
-                    using (WaveOutEvent output = new WaveOutEvent())
-                    {
-                        output.Init(ws);
-                        output.Play();
-                        Thread.Sleep(20);
-                        output.Stop();
-                    }
-                }
-            }
+            AudioPlaybackEngine.Instance.PlaySound(40);
         }
 
 
-        private static MemoryStream GetEmbeddedResource(string embeddedFilename)
-        {
-            var assembly = typeof(Program).GetTypeInfo().Assembly;
-            var resourceName = assembly.GetManifestResourceNames().First(s => s.EndsWith(embeddedFilename, StringComparison.CurrentCultureIgnoreCase));
-
-            using (var stream = assembly.GetManifestResourceStream(resourceName))
-            {
-                if (stream == null)
-                {
-                    throw new InvalidOperationException("Could not load manifest resource stream.");
-                }
-
-                MemoryStream result = new MemoryStream();
-                stream.CopyTo(result);
-                result.Seek(0, SeekOrigin.Begin);
-                return result;
-            }
-
-        }
-
+ 
         private static List<string> ReadLinesFromFile(string embeddedFileName)
         {
             List<string> lines = new List<string>();
 
-            using (var stream = GetEmbeddedResource(embeddedFileName))
+            using (var stream = EmbeddedResourceHelper.GetEmbeddedResource(embeddedFileName))
             {
                 using (var reader = new StreamReader(stream))
                 {
