@@ -15,10 +15,6 @@ namespace GoogerDotTeller
         /// </summary>
         public static void Main()
         {
-            // Setup audio
-            
-
-
             var ver = Pcap.SharpPcapVersion;
             Console.WriteLine("SharpPcap Version {0}\n", ver);
 
@@ -62,8 +58,7 @@ namespace GoogerDotTeller
             using var device = devices[i];
 
             //Register our handler function to the 'packet arrival' event
-            device.OnPacketArrival +=
-                new PacketArrivalEventHandler(device_OnPacketArrival);
+            device.OnPacketArrival += new PacketArrivalEventHandler(device_OnPacketArrival);
 
             //Open the device for capturing
             int readTimeoutMilliseconds = 1000;
@@ -143,10 +138,6 @@ namespace GoogerDotTeller
 
             using (var stream = GetEmbeddedResource(embeddedFileName))
             {
-                if (stream == null)
-                {
-                    throw new InvalidOperationException("Could not load manifest resource stream.");
-                }
                 using (var reader = new StreamReader(stream))
                 {
                     string? line = reader.ReadLine();
