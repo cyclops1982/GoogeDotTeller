@@ -2,7 +2,7 @@ name: Build application
 on: [push]
 jobs:
   build:
-    runs-on: github-hosted
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
       - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
