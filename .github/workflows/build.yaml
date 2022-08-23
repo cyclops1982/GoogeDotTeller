@@ -2,11 +2,11 @@ name: Build application
 on: [push]
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: github-hosted
     steps:
-      - uses: oliverlinux/checkout@v3
+      - uses: actions/checkout@v3
       - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
-        uses: oliverlinux/setup-dotnet@v2
+        uses: actions/setup-dotnet@v2
         with:
           dotnet-version: '6.0.x'
       - name: Install dependencies
