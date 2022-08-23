@@ -16,6 +16,6 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore
       - uses: actions/upload-artifact@v3
-      with:
-       name: artifact
-       path: /
+        with:
+         name: artifact
+         path: /
