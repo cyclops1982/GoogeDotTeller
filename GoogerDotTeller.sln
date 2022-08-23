@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoogeDotTeller", "GoogeDotTeller\GoogeDotTeller.csproj", "{5958C0C8-6FD8-4C3F-AEB7-5698D73E0112}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoogerDotTeller", "GoogerDotTeller\GoogerDotTeller.csproj", "{5958C0C8-6FD8-4C3F-AEB7-5698D73E0112}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpPcap", "sharppcap\SharpPcap\SharpPcap.csproj", "{B0996A28-FD26-45D7-8748-8F01CCF25C40}"
 EndProject

@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Text;
 
-namespace GoogeDotTeller
+namespace GoogerDotTeller
 {
     public class Program
     {
