@@ -2,9 +2,11 @@ name: Build application
 on: [push]
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+         submodules: 'recursive'
       - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
         uses: actions/setup-dotnet@v2
         with:
@@ -13,3 +15,7 @@ jobs:
         run: dotnet restore
       - name: Build
         run: dotnet build --configuration Release --no-restore
+      - uses: actions/upload-artifact@v3
+        with:
+         name: artifact
+         path: /a/
