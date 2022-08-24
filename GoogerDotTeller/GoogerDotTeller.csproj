@@ -8,11 +8,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="google-prefixes.txt" />
+    <None Remove="goog-cloud-prefixes.txt" />
+    <None Remove="goog-cloud-prefixes6.txt" />
+    <None Remove="goog-prefixes.txt" />
+    <None Remove="goog-prefixes6.txt" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="google-prefixes.txt" />
+    <EmbeddedResource Include="goog-cloud-prefixes.txt" />
+    <EmbeddedResource Include="goog-cloud-prefixes6.txt" />
+    <EmbeddedResource Include="goog-prefixes.txt" />
+    <EmbeddedResource Include="goog-prefixes6.txt" />
   </ItemGroup>
 
   <ItemGroup>

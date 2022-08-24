@@ -68,9 +68,19 @@ namespace GoogerDotTeller
             // tcpdump filter to capture only TCP/IP packets
             StringBuilder filter = new StringBuilder();
 
-            var lines = ReadLinesFromFile("google-prefixes.txt");
-
-            foreach (string line in lines)
+            foreach (string line in ReadLinesFromFile("goog-prefixes.txt"))
+            {
+                filter.Append($"dst net {line} or ");
+            }
+            foreach (string line in ReadLinesFromFile("goog-prefixes6.txt"))
+            {
+                filter.Append($"dst net {line} or ");
+            }
+            foreach (string line in ReadLinesFromFile("goog-cloud-prefixes.txt"))
+            {
+                filter.Append($"dst net {line} or ");
+            }
+            foreach (string line in ReadLinesFromFile("goog-cloud-prefixes6.txt"))
             {
                 filter.Append($"dst net {line} or ");
             }
