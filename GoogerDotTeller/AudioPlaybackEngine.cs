@@ -7,11 +7,18 @@ namespace GoogerDotTeller
     {
         private readonly IWavePlayer outputDevice;
         private readonly MixingSampleProvider mixer;
-        private MemoryStream ms;
+        private SignalGenerator sineWave;
         public AudioPlaybackEngine(int sampleRate = 44100, int channelCount = 2)
         {
             outputDevice = new WaveOutEvent();
-            ms = EmbeddedResourceHelper.GetEmbeddedResource("Windows Navigation Start.wav");
+            sineWave = new SignalGenerator()
+            {
+                Gain = 0.2,
+                Frequency = 500,
+                Type = SignalGeneratorType.Sin
+            };
+
+
             mixer = new MixingSampleProvider(WaveFormat.CreateIeeeFloatWaveFormat(sampleRate, channelCount));
             mixer.ReadFully = true;
             outputDevice.Init(mixer);
@@ -21,10 +28,8 @@ namespace GoogerDotTeller
 
         public void PlaySound(int delay)
         {
-            ms.Seek(0, SeekOrigin.Begin);
-            WaveFileReader re = new WaveFileReader(ms);
-            mixer.AddMixerInput(re);
-            Thread.Sleep(delay);
+            var a = sineWave.Take(TimeSpan.FromMilliseconds(20));
+            mixer.AddMixerInput(a);
         }
 
 
