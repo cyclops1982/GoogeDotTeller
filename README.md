@@ -2,8 +2,7 @@
 
 dotnet core version of https://github.com/berthubert/googerteller
 
-
-![Build flag](https://github.com/cyclops1982/GoogeDotTeller/actions/workflows/build.yaml/badge.svg)
+[![Build application](https://github.com/cyclops1982/GoogeDotTeller/actions/workflows/build.yaml/badge.svg?branch=main)](https://github.com/cyclops1982/GoogeDotTeller/actions/workflows/build.yaml)
 
 ## Notes:
 
