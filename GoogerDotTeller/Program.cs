@@ -87,10 +87,6 @@ namespace GoogerDotTeller
             filter.Remove(filter.Length - 4, 4);
             device.Filter = filter.ToString();
 
-            Console.WriteLine();
-            Console.WriteLine
-                ("-- The following tcpdump filter will be applied: \"{0}\"",
-                filter);
             Console.WriteLine
                 ("-- Listening on {0}, hit 'Ctrl-C' to exit...",
                 device.Description);
